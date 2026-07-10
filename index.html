@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Murali Natarajan — GRC & Cybersecurity Analyst</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0B1220;
+    --surface:#121B2B;
+    --surface-alt:#182437;
+    --surface-hover:#1D2B41;
+    --border:#243349;
+    --border-soft:#1B2738;
+    --text:#E9EEF4;
+    --text-dim:#93A2B8;
+    --text-faint:#5D6D85;
+    --teal:#4FD1C5;
+    --teal-dim:#2C7A70;
+    --amber:#E8A33D;
+    --amber-dim:#8A5F22;
+    --blue:#5B8DEF;
+    --radius:10px;
+    --maxw:1180px;
+  }
+  *{ margin:0; padding:0; box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'IBM Plex Sans', sans-serif;
+    line-height:1.6;
+    overflow-x:hidden;
+  }
+  ::selection{ background:var(--teal); color:var(--bg); }
+
+  h1,h2,h3,h4{ font-family:'Space Grotesk', sans-serif; font-weight:600; letter-spacing:-0.01em; }
+  .mono{ font-family:'IBM Plex Mono', monospace; }
+
+  a{ color:inherit; text-decoration:none; }
+  img{ max-width:100%; display:block; }
+
+  .wrap{ max-width:var(--maxw); margin:0 auto; padding:0 32px; }
+
+  /* Background grid texture */
+  .bg-grid{
+    position:fixed; inset:0; z-index:0; pointer-events:none;
+    background-image:
+      linear-gradient(rgba(79,209,197,0.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(79,209,197,0.035) 1px, transparent 1px);
+    background-size:48px 48px;
+    mask-image:radial-gradient(ellipse 80% 60% at 50% 0%, black 40%, transparent 100%);
+  }
+
+  /* ===== NAV ===== */
+  header{
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    background:rgba(11,18,32,0.85);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--border-soft);
+  }
+  nav{
+    max-width:var(--maxw); margin:0 auto; padding:16px 32px;
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  .brand{
+    display:flex; align-items:center; gap:10px;
+    font-family:'Space Grotesk', sans-serif; font-weight:600; font-size:17px;
+  }
+  .brand .dot{
+    width:9px; height:9px; border-radius:50%; background:var(--teal);
+    box-shadow:0 0 10px var(--teal);
+  }
+  .navlinks{ display:flex; gap:32px; font-size:14px; color:var(--text-dim); }
+  .navlinks a{ transition:color .2s; position:relative; }
+  .navlinks a:hover{ color:var(--teal); }
+  .nav-cta{
+    font-family:'IBM Plex Mono', monospace; font-size:12.5px;
+    border:1px solid var(--teal-dim); color:var(--teal);
+    padding:8px 16px; border-radius:6px; transition:all .2s;
+  }
+  .nav-cta:hover{ background:var(--teal); color:var(--bg); }
+  .navlinks, .nav-cta{ display:flex; }
+  .burger{ display:none; }
+
+  @media(max-width:860px){
+    .navlinks{ display:none; }
+    .nav-cta{ display:none; }
+  }
+
+  /* ===== HERO ===== */
+  .hero{
+    position:relative; z-index:1;
+    padding:168px 0 100px;
+    display:grid; grid-template-columns:1.1fr 0.9fr; gap:60px; align-items:center;
+  }
+  @media(max-width:900px){ .hero{ grid-template-columns:1fr; padding-top:140px; } }
+
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:8px;
+    font-family:'IBM Plex Mono', monospace; font-size:12.5px; color:var(--teal);
+    border:1px solid var(--teal-dim); padding:6px 12px; border-radius:20px;
+    margin-bottom:24px; letter-spacing:0.04em;
+  }
+  .eyebrow::before{ content:''; width:6px; height:6px; border-radius:50%; background:var(--teal); animation:pulse 2s infinite; }
+  @keyframes pulse{ 0%,100%{opacity:1;} 50%{opacity:.3;} }
+
+  .hero h1{
+    font-size:56px; line-height:1.05; margin-bottom:18px; color:var(--text);
+  }
+  .hero h1 span{ color:var(--teal); }
+  .role-ticker{
+    font-family:'IBM Plex Mono', monospace; font-size:20px; color:var(--amber);
+    margin-bottom:22px; height:28px; display:flex; align-items:center;
+  }
+  .role-ticker .cursor{ animation:blink 1s step-start infinite; }
+  @keyframes blink{ 50%{ opacity:0; } }
+
+  .hero p.desc{ color:var(--text-dim); font-size:16.5px; max-width:540px; margin-bottom:32px; }
+
+  .hero-ctas{ display:flex; gap:14px; flex-wrap:wrap; margin-bottom:40px; }
+  .btn{
+    font-family:'IBM Plex Mono', monospace; font-size:13.5px; font-weight:500;
+    padding:13px 22px; border-radius:7px; transition:all .2s; display:inline-flex; align-items:center; gap:8px;
+    border:1px solid transparent;
+  }
+  .btn-primary{ background:var(--teal); color:#04211D; }
+  .btn-primary:hover{ background:#6EE0D6; transform:translateY(-1px); }
+  .btn-outline{ border-color:var(--border); color:var(--text); }
+  .btn-outline:hover{ border-color:var(--teal); color:var(--teal); }
+
+  .hero-meta{ display:flex; gap:28px; flex-wrap:wrap; font-size:13.5px; color:var(--text-faint); }
+  .hero-meta span{ display:flex; align-items:center; gap:7px; }
+  .hero-meta .ic{ color:var(--teal); }
+
+  /* Badge card */
+  .badge-card{
+    background:linear-gradient(160deg, var(--surface) 0%, var(--surface-alt) 100%);
+    border:1px solid var(--border); border-radius:16px; padding:32px;
+    position:relative; overflow:hidden;
+  }
+  .badge-card::before{
+    content:''; position:absolute; top:-40%; right:-30%; width:280px; height:280px;
+    background:radial-gradient(circle, rgba(79,209,197,0.12), transparent 70%);
+  }
+  .badge-top{ display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:28px; position:relative; }
+  .badge-label{ font-family:'IBM Plex Mono', monospace; font-size:11px; color:var(--text-faint); letter-spacing:0.08em; }
+  .badge-status{
+    font-family:'IBM Plex Mono', monospace; font-size:11px; color:var(--teal);
+    border:1px solid var(--teal-dim); padding:4px 10px; border-radius:20px;
+    display:flex; align-items:center; gap:6px;
+  }
+  .badge-status::before{ content:''; width:6px; height:6px; border-radius:50%; background:var(--teal); }
+
+  .badge-photo{
+    width:72px; height:72px; border-radius:12px; margin-bottom:16px;
+    background:linear-gradient(135deg, var(--teal), var(--blue));
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Space Grotesk', sans-serif; font-weight:700; font-size:26px; color:var(--bg);
+  }
+  .badge-name{ font-size:20px; margin-bottom:4px; }
+  .badge-role{ font-size:13px; color:var(--text-dim); margin-bottom:20px; }
+
+  .badge-stats{ display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:8px; }
+  .badge-stat{ border-top:1px solid var(--border-soft); padding-top:12px; }
+  .badge-stat .num{ font-family:'Space Grotesk', sans-serif; font-size:24px; color:var(--teal); font-weight:700; }
+  .badge-stat .lbl{ font-size:11.5px; color:var(--text-faint); margin-top:2px; }
+
+  /* ===== SECTION SHARED ===== */
+  section{ position:relative; z-index:1; padding:100px 0; }
+  .sec-head{ margin-bottom:52px; }
+  .sec-eyebrow{
+    font-family:'IBM Plex Mono', monospace; font-size:12.5px; color:var(--teal);
+    letter-spacing:0.1em; margin-bottom:12px; display:block;
+  }
+  .sec-title{ font-size:34px; }
+  .sec-sub{ color:var(--text-dim); font-size:15.5px; margin-top:10px; max-width:600px; }
+
+  .divider{ height:1px; background:var(--border-soft); border:none; }
+
+  /* ===== ABOUT ===== */
+  .about-grid{ display:grid; grid-template-columns:1fr 1fr; gap:56px; align-items:start; }
+  @media(max-width:860px){ .about-grid{ grid-template-columns:1fr; } }
+  .about-text p{ color:var(--text-dim); margin-bottom:16px; font-size:15.5px; }
+  .about-text strong{ color:var(--text); font-weight:600; }
+
+  .timeline-mini{ border-left:2px solid var(--border); padding-left:24px; display:flex; flex-direction:column; gap:22px; }
+  .tm-item{ position:relative; }
+  .tm-item::before{
+    content:''; position:absolute; left:-31px; top:4px; width:10px; height:10px;
+    border-radius:50%; background:var(--bg); border:2px solid var(--teal);
+  }
+  .tm-item .tm-year{ font-family:'IBM Plex Mono', monospace; font-size:12px; color:var(--amber); }
+  .tm-item .tm-title{ font-size:15px; font-weight:600; margin:2px 0; }
+  .tm-item .tm-sub{ font-size:13.5px; color:var(--text-faint); }
+
+  /* ===== SKILLS ===== */
+  .skills-grid{ display:grid; grid-template-columns:repeat(3, 1fr); gap:24px; }
+  @media(max-width:900px){ .skills-grid{ grid-template-columns:1fr; } }
+  .skill-col{
+    background:var(--surface); border:1px solid var(--border-soft); border-radius:var(--radius); padding:26px;
+  }
+  .skill-col h4{ font-size:15px; color:var(--teal); margin-bottom:18px; display:flex; align-items:center; gap:8px; }
+  .skill-col h4::before{ content:''; width:4px; height:16px; background:var(--teal); border-radius:2px; }
+  .skill-row{ display:flex; justify-content:space-between; align-items:center; padding:10px 0; border-bottom:1px solid var(--border-soft); }
+  .skill-row:last-child{ border-bottom:none; }
+  .skill-name{ font-size:13.5px; color:var(--text); }
+  .dots{ display:flex; gap:4px; }
+  .dot{ width:7px; height:7px; border-radius:50%; background:var(--border); }
+  .dot.on{ background:var(--teal); }
+
+  /* ===== PROJECTS ===== */
+  .proj-grid{ display:grid; grid-template-columns:repeat(3, 1fr); gap:22px; }
+  @media(max-width:960px){ .proj-grid{ grid-template-columns:1fr 1fr; } }
+  @media(max-width:640px){ .proj-grid{ grid-template-columns:1fr; } }
+  .proj-card{
+    background:var(--surface); border:1px solid var(--border-soft); border-radius:var(--radius);
+    padding:26px; display:flex; flex-direction:column; transition:all .25s;
+  }
+  .proj-card:hover{ border-color:var(--teal-dim); transform:translateY(-3px); background:var(--surface-hover); }
+  .proj-tag{
+    font-family:'IBM Plex Mono', monospace; font-size:10.5px; color:var(--amber);
+    letter-spacing:0.06em; margin-bottom:12px;
+  }
+  .proj-card h3{ font-size:17px; margin-bottom:10px; }
+  .proj-card p{ font-size:13.5px; color:var(--text-dim); flex-grow:1; margin-bottom:16px; }
+  .proj-tools{ display:flex; flex-wrap:wrap; gap:6px; margin-bottom:18px; }
+  .tool-chip{
+    font-family:'IBM Plex Mono', monospace; font-size:10.5px; color:var(--text-faint);
+    border:1px solid var(--border); padding:3px 9px; border-radius:12px;
+  }
+  .proj-link{
+    font-family:'IBM Plex Mono', monospace; font-size:12.5px; color:var(--teal);
+    display:flex; align-items:center; gap:6px;
+  }
+  .proj-link .arrow{ transition:transform .2s; }
+  .proj-card:hover .arrow{ transform:translateX(3px); }
+
+  /* ===== HOME LAB TERMINAL ===== */
+  .terminal{
+    background:#0A1018; border:1px solid var(--border); border-radius:12px; overflow:hidden;
+  }
+  .term-bar{
+    background:var(--surface-alt); padding:11px 16px; display:flex; align-items:center; gap:8px;
+    border-bottom:1px solid var(--border-soft);
+  }
+  .term-dot{ width:11px; height:11px; border-radius:50%; }
+  .term-bar .t1{ background:#E5484D; } .term-bar .t2{ background:#E8A33D; } .term-bar .t3{ background:#4FD1C5; }
+  .term-title{ margin-left:8px; font-family:'IBM Plex Mono', monospace; font-size:12px; color:var(--text-faint); }
+  .term-body{ padding:22px 24px; font-family:'IBM Plex Mono', monospace; font-size:13px; line-height:1.9; }
+  .term-body .prompt{ color:var(--teal); }
+  .term-body .cmt{ color:var(--text-faint); }
+  .term-body .out{ color:var(--text-dim); }
+  .term-body .hi{ color:var(--amber); }
+
+  /* ===== CERTS ===== */
+  .cert-grid{ display:grid; grid-template-columns:repeat(3, 1fr); gap:18px; }
+  @media(max-width:860px){ .cert-grid{ grid-template-columns:1fr 1fr; } }
+  @media(max-width:560px){ .cert-grid{ grid-template-columns:1fr; } }
+  .cert-card{
+    background:var(--surface); border:1px solid var(--border-soft); border-radius:var(--radius);
+    padding:20px; display:flex; gap:14px; align-items:flex-start;
+  }
+  .cert-icon{
+    width:38px; height:38px; border-radius:8px; flex-shrink:0;
+    display:flex; align-items:center; justify-content:center; font-size:16px;
+  }
+  .cert-icon.done{ background:rgba(79,209,197,0.12); color:var(--teal); }
+  .cert-icon.prog{ background:rgba(232,163,61,0.12); color:var(--amber); }
+  .cert-card h5{ font-size:13.5px; font-weight:600; margin-bottom:3px; }
+  .cert-card p{ font-size:12px; color:var(--text-faint); }
+
+  /* ===== CONTACT ===== */
+  .contact-box{
+    background:linear-gradient(135deg, var(--surface) 0%, var(--surface-alt) 100%);
+    border:1px solid var(--border); border-radius:16px; padding:56px;
+    text-align:center;
+  }
+  .contact-box h2{ font-size:32px; margin-bottom:14px; }
+  .contact-box p{ color:var(--text-dim); max-width:480px; margin:0 auto 32px; }
+  .contact-links{ display:flex; gap:16px; justify-content:center; flex-wrap:wrap; }
+
+  footer{
+    border-top:1px solid var(--border-soft); padding:32px 0; text-align:center;
+    font-size:13px; color:var(--text-faint); position:relative; z-index:1;
+  }
+
+  .reveal{ opacity:0; transform:translateY(24px); transition:opacity .6s ease, transform .6s ease; }
+  .reveal.show{ opacity:1; transform:translateY(0); }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation:none !important; transition:none !important; }
+    .reveal{ opacity:1; transform:none; }
+  }
+
+  @media(max-width:600px){
+    .hero h1{ font-size:38px; }
+    .wrap{ padding:0 20px; }
+    .sec-title{ font-size:26px; }
+    .contact-box{ padding:36px 24px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="bg-grid"></div>
+
+<header>
+  <nav>
+    <div class="brand"><span class="dot"></span>MURALI.SEC</div>
+    <div class="navlinks">
+      <a href="#about">About</a>
+      <a href="#skills">Skills</a>
+      <a href="#projects">Projects</a>
+      <a href="#lab">Home Lab</a>
+      <a href="#certs">Certs</a>
+    </div>
+    <a href="#contact" class="nav-cta">$ contact --now</a>
+  </nav>
+</header>
+
+<main class="wrap">
+
+  <!-- HERO -->
+  <section class="hero" id="top">
+    <div>
+      <div class="eyebrow">AVAILABLE FOR RELOCATION — UAE / QATAR / KSA / SINGAPORE</div>
+      <h1>Murali Natarajan<br><span>secures systems,</span> not just projects.</h1>
+      <div class="role-ticker"><span id="ticker">GRC Analyst_</span></div>
+      <p class="desc">15+ years leading risk, quality, and compliance programmes across 5 countries — now applied to cybersecurity. Google-certified, home-lab tested, and backed by a documented portfolio of real GRC, SOC, and vulnerability assessment work.</p>
+      <div class="hero-ctas">
+        <a href="assets/Murali_Natarajan_Resume.pdf" download class="btn btn-primary" id="resumeBtn">↓ Download Résumé</a>
+        <a href="https://github.com/muralidme007-code" target="_blank" class="btn btn-outline">View GitHub Portfolio</a>
+      </div>
+      <div class="hero-meta">
+        <span><span class="ic">◆</span> Chennai, India</span>
+        <span><span class="ic">◆</span> +91-8148963898</span>
+        <span><span class="ic">◆</span> muralidme007@gmail.com</span>
+        <span><span class="ic">◆</span> linkedin.com/in/murali-natarajan</span>
+      </div>
+    </div>
+
+    <div class="badge-card reveal">
+      <div class="badge-top">
+        <span class="badge-label">ACCESS // PROFILE</span>
+        <span class="badge-status">ACTIVE</span>
+      </div>
+      <div class="badge-photo">MN</div>
+      <div class="badge-name">Murali Natarajan</div>
+      <div class="badge-role">GRC · Cybersecurity · Security PM</div>
+      <div class="badge-stats">
+        <div class="badge-stat"><div class="num">15+</div><div class="lbl">Years Intl. Experience</div></div>
+        <div class="badge-stat"><div class="num">5</div><div class="lbl">Countries Delivered</div></div>
+        <div class="badge-stat"><div class="num">14</div><div class="lbl">CVEs Assessed (VA Lab)</div></div>
+        <div class="badge-stat"><div class="num">18m</div><div class="lbl">Avg. Incident Containment</div></div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="sec-head reveal">
+      <span class="sec-eyebrow">// 01 — ABOUT</span>
+      <h2 class="sec-title">From site audits to security audits.</h2>
+      <p class="sec-sub">The frameworks changed. The discipline didn't.</p>
+    </div>
+    <div class="about-grid">
+      <div class="about-text reveal">
+        <p>For over 15 years I led <strong>quality assurance, risk management, and project delivery</strong> on some of the region's most demanding builds — Microsoft's SIN06 data center, Siltronic's semiconductor FAB, and multi-country O&G programmes across the UAE, Oman, and Kuwait.</p>
+        <p>Every one of those roles came down to the same core skill: <strong>finding risk before it finds you</strong> — through inspections, NCR tracking, root cause analysis, and compliance documentation. In 2026 I formalised that instinct for cybersecurity, earning my <strong>Google Cybersecurity Certificate</strong> and building a home lab to prove it hands-on.</p>
+        <p>Today I document real risk registers, incident response reports, and vulnerability assessments — mapped to <strong>NIST CSF 2.0, ISO 27001, and MITRE ATT&CK</strong> — the same rigor I once brought to ISO-compliant QMS on mission-critical builds.</p>
+      </div>
+      <div class="timeline-mini reveal">
+        <div class="tm-item">
+          <div class="tm-year">2026 — PRESENT</div>
+          <div class="tm-title">Cybersecurity Transition</div>
+          <div class="tm-sub">Google Cybersecurity Cert · Home Lab · GRC Portfolio</div>
+        </div>
+        <div class="tm-item">
+          <div class="tm-year">FEB 2025 — PRESENT</div>
+          <div class="tm-title">Business Development &amp; Sales Partner, Atlantic Service</div>
+          <div class="tm-sub">Marine Engines &amp; Heavy Equipment — Cuddalore, India</div>
+        </div>
+        <div class="tm-item">
+          <div class="tm-year">2020 — 2025</div>
+          <div class="tm-title">Project Manager, Weng Soon Pte Ltd</div>
+          <div class="tm-sub">Microsoft Data Center SIN06 · Siltronic C18 FAB — Singapore</div>
+        </div>
+        <div class="tm-item">
+          <div class="tm-year">2019 — 2020</div>
+          <div class="tm-title">QA/QC Manager, Weng Soon Pte Ltd</div>
+          <div class="tm-sub">ISO-Compliant QMS · Zero Critical NCRs — Singapore</div>
+        </div>
+        <div class="tm-item">
+          <div class="tm-year">2019</div>
+          <div class="tm-title">QA/QC Engineer, Kong Hwee Iron Works</div>
+          <div class="tm-sub">Mandai Zoo · Shimizu Projects — Singapore</div>
+        </div>
+        <div class="tm-item">
+          <div class="tm-year">2015 — 2017</div>
+          <div class="tm-title">Logistics &amp; QC Documentation Engineer</div>
+          <div class="tm-sub">Composite Pipe Industries — Muscat, Oman</div>
+        </div>
+        <div class="tm-item">
+          <div class="tm-year">2009 — 2014</div>
+          <div class="tm-title">Quality &amp; Materials Controller</div>
+          <div class="tm-sub">Kuwait · India — Foundational QC Roles</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="sec-head reveal">
+      <span class="sec-eyebrow">// 02 — CAPABILITIES</span>
+      <h2 class="sec-title">Where I'm strongest.</h2>
+      <p class="sec-sub">Dots indicate applied proficiency — from hands-on lab work and real project documentation.</p>
+    </div>
+    <div class="skills-grid reveal">
+      <div class="skill-col">
+        <h4>GRC &amp; Compliance</h4>
+        <div class="skill-row"><span class="skill-name">Risk Register Development</span><div class="dots"><div class="dot on"></div><div class="dot on"></div><div class="dot on"></div></div></div>
+        <div class="skill-row"><span class="skill-name">NIST CSF 2.0 / ISO 27001</span><div class="dots"><div class="dot on"></div><div class="dot on"></div><div class="dot on"></div></div></div>
+        <div class="skill-row"><span class="skill-name">Compliance Auditing</span><div class="dots"><div class="dot on"></div><div class="dot on"></div><div class="dot on"></div></div></div>
+        <div class="skill-row"><span class="skill-name">Security Policy Development</span><div class="dots"><div class="dot on"></div><div class="dot on"></div><div class="dot"></div></div></div>
+        <div class="skill-row"><span class="skill-name">CIS Controls v8</span><div class="dots"><div class="dot on"></div><div class="dot on"></div><div class="dot"></div></div></div>
+      </div>
+      <div class="skill-col">
+        <h4>Security Operations</h4>
+        <div class="skill-row"><span class="skill-name">Wazuh SIEM &amp; Log Analysis</span><div class="dots"><div class="dot on"></div><div class="dot on"></div><div class="dot on"></div></div></div>
+        <div class="skill-row"><span class="skill-name">Incident Response (800-61)</span><div class="dots"><div class="dot on"></div><div class="dot on"></div><div class="dot on"></div></div></div>
+        <div class="skill-row"><span class="skill-name">MITRE ATT&amp;CK Mapping</span><div class="dots"><div class="dot on"></div><div class="dot on"></div><div class="dot"></div></div></div>
+        <div class="skill-row"><span class="skill-name">Vulnerability Assessment</span><div class="dots"><div class="dot on"></div><div class="dot on"></div><div class="dot on"></div></div></div>
+        <div class="skill-row"><span class="skill-name">CVSSv3.1 Scoring</span><div class="dots"><div class="dot on"></div><div class="dot on"></div><div class="dot"></div></div></div>
+      </div>
+      <div class="skill-col">
+        <h4>Technical Foundations</h4>
+        <div class="skill-row"><span class="skill-name">Linux Administration</span><div class="dots"><div class="dot on"></div><div class="dot on"></div><div class="dot"></div></div></div>
+        <div class="skill-row"><span class="skill-name">Nmap / OpenVAS / Nikto</span><div class="dots"><div class="dot on"></div><div class="dot on"></div><div class="dot on"></div></div></div>
+        <div class="skill-row"><span class="skill-name">Python &amp; Bash Scripting</span><div class="dots"><div class="dot on"></div><div class="dot on"></div><div class="dot"></div></div></div>
+        <div class="skill-row"><span class="skill-name">Wireshark / Packet Analysis</span><div class="dots"><div class="dot on"></div><div class="dot"></div><div class="dot"></div></div></div>
+        <div class="skill-row"><span class="skill-name">Cloud Security (AWS)</span><div class="dots"><div class="dot on"></div><div class="dot"></div><div class="dot"></div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="sec-head reveal">
+      <span class="sec-eyebrow">// 03 — PORTFOLIO</span>
+      <h2 class="sec-title">Documented, not just claimed.</h2>
+      <p class="sec-sub">Every project below is a full report — objectives, methodology, evidence, and remediation — built from my home lab.</p>
+    </div>
+    <div class="proj-grid reveal">
+
+      <div class="proj-card">
+        <div class="proj-tag">GRC · RISK MANAGEMENT</div>
+        <h3>Cybersecurity Risk Register</h3>
+        <p>12-risk enterprise register with Likelihood × Impact scoring, full treatment plans, and control mapping across phishing, ransomware, insider threat, and cloud misconfiguration scenarios.</p>
+        <div class="proj-tools">
+          <span class="tool-chip">NIST CSF 2.0</span>
+          <span class="tool-chip">ISO 27001</span>
+          <span class="tool-chip">CIS v8</span>
+        </div>
+        <a href="https://github.com/muralidme007-code" target="_blank" class="proj-link">View on GitHub <span class="arrow">→</span></a>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-tag">SOC · INCIDENT RESPONSE</div>
+        <h3>Security Incident Response Report</h3>
+        <p>Full lifecycle documentation of a real Wazuh-detected SSH brute force attack — 2,412 attempts, contained in 18 minutes, 7 MITRE ATT&CK techniques mapped.</p>
+        <div class="proj-tools">
+          <span class="tool-chip">Wazuh SIEM</span>
+          <span class="tool-chip">NIST 800-61</span>
+          <span class="tool-chip">MITRE ATT&CK</span>
+        </div>
+        <a href="https://github.com/muralidme007-code" target="_blank" class="proj-link">View on GitHub <span class="arrow">→</span></a>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-tag">VULNERABILITY ASSESSMENT</div>
+        <h3>Vulnerability Assessment Report</h3>
+        <p>Full VA against a 5-host lab network. 14 vulnerabilities identified including 3 CRITICAL CVEs (CVSS 9.8–10.0), with phased remediation roadmap.</p>
+        <div class="proj-tools">
+          <span class="tool-chip">Nmap</span>
+          <span class="tool-chip">OpenVAS</span>
+          <span class="tool-chip">CVSSv3.1</span>
+        </div>
+        <a href="https://github.com/muralidme007-code" target="_blank" class="proj-link">View on GitHub <span class="arrow">→</span></a>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-tag">AUTOMATION</div>
+        <h3>AI Security Triage Agent</h3>
+        <p>Python-based tool using Gemini 2.5 Flash API to automatically classify and triage security alerts by MITRE ATT&CK tactic.</p>
+        <div class="proj-tools">
+          <span class="tool-chip">Python</span>
+          <span class="tool-chip">Gemini API</span>
+        </div>
+        <a href="https://github.com/muralidme007-code" target="_blank" class="proj-link">View on GitHub <span class="arrow">→</span></a>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-tag">AUTOMATION</div>
+        <h3>Job Alert Automation Script</h3>
+        <p>Python script pulling GRC/Security roles from RSS feeds with automated daily email digest via msmtp, scheduled with cron on Kali Linux.</p>
+        <div class="proj-tools">
+          <span class="tool-chip">Python</span>
+          <span class="tool-chip">Cron</span>
+          <span class="tool-chip">Kali Linux</span>
+        </div>
+        <a href="https://github.com/muralidme007-code" target="_blank" class="proj-link">View on GitHub <span class="arrow">→</span></a>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-tag">COMING SOON</div>
+        <h3>ISO 27001 Gap Analysis</h3>
+        <p>Full Annex A control gap assessment for a fictional mid-size enterprise, with prioritised remediation plan and audit-ready documentation.</p>
+        <div class="proj-tools">
+          <span class="tool-chip">ISO 27001:2022</span>
+          <span class="tool-chip">Annex A</span>
+        </div>
+        <a href="https://github.com/muralidme007-code" target="_blank" class="proj-link">In Progress <span class="arrow">→</span></a>
+      </div>
+
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- HOME LAB -->
+  <section id="lab">
+    <div class="sec-head reveal">
+      <span class="sec-eyebrow">// 04 — HOME LAB</span>
+      <h2 class="sec-title">The environment behind the reports.</h2>
+      <p class="sec-sub">A fully networked, multi-VM lab used to generate every finding in this portfolio.</p>
+    </div>
+    <div class="terminal reveal">
+      <div class="term-bar">
+        <div class="term-dot t1"></div><div class="term-dot t2"></div><div class="term-dot t3"></div>
+        <span class="term-title">murali@homelab: ~/environment</span>
+      </div>
+      <div class="term-body">
+        <div><span class="prompt">$</span> lab --show-stack</div>
+        <div class="cmt"># Hypervisor</div>
+        <div class="out">VirtualBox — 4 networked VMs, isolated lab subnet</div>
+        <div class="cmt" style="margin-top:10px;"># Virtual Machines</div>
+        <div class="out">├─ Kali Linux 2026.1        <span class="hi">[attacker / scanning host]</span></div>
+        <div class="out">├─ Ubuntu Server 22.04      <span class="hi">[target web/app server]</span></div>
+        <div class="out">├─ Metasploitable2          <span class="hi">[intentionally vulnerable target]</span></div>
+        <div class="out">└─ Wazuh Manager            <span class="hi">[SIEM, log analysis, active response]</span></div>
+        <div class="cmt" style="margin-top:10px;"># Tools</div>
+        <div class="out">Nmap · OpenVAS/GVM · Nikto · Wireshark · Python · Bash · msmtp · Cron</div>
+        <div style="margin-top:14px;"><span class="prompt">$</span> <span class="cursor">_</span></div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- CERTS -->
+  <section id="certs">
+    <div class="sec-head reveal">
+      <span class="sec-eyebrow">// 05 — CERTIFICATIONS</span>
+      <h2 class="sec-title">Credentials in progress and complete.</h2>
+    </div>
+    <div class="cert-grid reveal">
+      <div class="cert-card">
+        <div class="cert-icon done">✓</div>
+        <div><h5>Google Cybersecurity Certificate</h5><p>Coursera / Google — 2025</p></div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-icon done">✓</div>
+        <div><h5>Google AI Essentials</h5><p>Coursera / Google — 2026</p></div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-icon done">✓</div>
+        <div><h5>Lean Six Sigma Green Belt</h5><p>Specialization — 2026</p></div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-icon done">✓</div>
+        <div><h5>Project Management Foundation</h5><p>Quality-focused track</p></div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-icon prog">◔</div>
+        <div><h5>ISC2 Certified in Cybersecurity</h5><p>In Progress</p></div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-icon prog">◔</div>
+        <div><h5>CompTIA Security+ (SY0-701)</h5><p>In Progress</p></div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-icon done">✓</div>
+        <div><h5>WSQ: Supervise Construction Work</h5><p>Workplace Safety &amp; Health</p></div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="contact-box reveal">
+      <h2>Let's talk risk, response, and results.</h2>
+      <p>Open to GRC Analyst and Cybersecurity Analyst roles across UAE, Qatar, KSA, and Singapore. Available for immediate discussion.</p>
+      <div class="contact-links">
+        <a href="mailto:muralidme007@gmail.com" class="btn btn-primary">✉ Email Me</a>
+        <a href="tel:+918148963898" class="btn btn-outline">📞 +91-8148963898</a>
+        <a href="https://linkedin.com/in/murali-natarajan" target="_blank" class="btn btn-outline">LinkedIn</a>
+        <a href="https://github.com/muralidme007-code" target="_blank" class="btn btn-outline">GitHub</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">© 2025 Murali Natarajan — GRC &amp; Cybersecurity Analyst · Chennai, India</div>
+</footer>
+
+<script>
+  // Role ticker
+  const roles = ["GRC Analyst_", "Cybersecurity Analyst_", "Security Project Manager_", "Risk & Compliance Specialist_"];
+  let ri = 0;
+  const tickerEl = document.getElementById('ticker');
+  function cycleRole(){
+    ri = (ri + 1) % roles.length;
+    tickerEl.style.opacity = 0;
+    setTimeout(() => {
+      tickerEl.textContent = roles[ri];
+      tickerEl.style.opacity = 1;
+    }, 300);
+  }
+  tickerEl.style.transition = 'opacity .3s';
+  setInterval(cycleRole, 2600);
+
+  // Scroll reveal
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('show'); io.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  revealEls.forEach(el => io.observe(el));
+
+  // Resume button now links directly to the hosted PDF — no placeholder needed
+</script>
+
+</body>
+</html>
